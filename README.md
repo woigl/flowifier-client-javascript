@@ -1,5 +1,8 @@
 # Flowifier Client Library for JavaScript
 
+[![npm version](https://img.shields.io/npm/v/@flowifier/flowifier-client?style=flat-square)](https://www.npmjs.org/package/@flowifier/flowifier-client)
+[![install size](https://img.shields.io/badge/dynamic/json?url=https://packagephobia.com/v2/api.json?p=@flowifier/flowifier-client&query=$.install.pretty&label=install%20size&style=flat-square)](https://packagephobia.com/result?p=@flowifier/flowifier-client)
+
 This library gives you a seemless integration of the [Flowifier application](http://flowifier.com) into your code.
 
 It allows you to:
