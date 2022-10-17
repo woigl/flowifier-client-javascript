@@ -1,7 +1,7 @@
 {
   "name": "@flowifier/flowifier-client",
   "description": "Flowifier JavaScript Client Library",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "author": "Stefan Walter",
   "license": "MIT",
   "homepage": "https://flowifier.com",
