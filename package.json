@@ -1,0 +1,37 @@
+{
+  "name": "@flowifier/flowifier-client",
+  "description": "Flowifier JavaScript Client Library",
+  "version": "0.9.5",
+  "author": "Stefan Walter",
+  "license": "MIT",
+  "homepage": "https://flowifier.com",
+  "keywords": [
+    "flowifier",
+    "client",
+    "library"
+  ],
+  "files": [
+    "README.md",
+    "lib/"
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node app/app.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:woigl/flowifier-client-javascript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/woigl/flowifier-client-javascript/issues"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "jest": "^29.0.3"
+  },
+  "dependencies": {
+    "axios": "^1.1.2",
+    "bson": "^4.7.0"
+  }
+}
