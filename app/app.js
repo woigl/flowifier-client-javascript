@@ -38,7 +38,7 @@ const main = async () => {
         'lastname': 'Client Library'
     }
 
-    const workflowInstance = await flowifier.executeWorkflow("62fb457b198284c3c5009001", contextObj);
+    const workflowInstance = await flowifier.executeWorkflow(singleWorkflow.id, contextObj);
 
     console.log(`New Workflow Instance Id: ${workflowInstance.id}`);
     var workflowInstanceId = workflowInstance.id;
@@ -49,7 +49,7 @@ const main = async () => {
     var workflowInstanceStatus = "initial";
 
     do {
-        workflowInstanceStatus = await flowifier.getWorkflowInstanceStatus(`62fb457b198284c3c5009001`, workflowInstanceId)
+        workflowInstanceStatus = await flowifier.getWorkflowInstanceStatus(workflowInstanceId)
         if (workflowInstanceStatus != "finished") {
             console.log(`Workflow Instance Status: ${workflowInstanceStatus}`)
         } else {
@@ -62,10 +62,10 @@ const main = async () => {
     if (workflowInstanceStatus == "finished") {
 
         console.log();
-        console.log("--- Get Workflow Instance Status ----------------------------------");
+        console.log("--- Get Workflow Instance Result ----------------------------------");
 
-        var workflowInstanceResult = await flowifier.getWorkflowInstanceResult("62fb457b198284c3c5009001", workflowInstanceId)
-        console.log('Workflow Instance Status:', workflowInstanceResult)
+        var workflowInstanceResult = await flowifier.getWorkflowInstanceResult(workflowInstanceId)
+        console.log('Workflow Instance Result:', workflowInstanceResult)
     }
 
     console.log();
