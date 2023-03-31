@@ -1,75 +1,71 @@
-require('dotenv').config()
-const Flowifier = require('../lib')
+/* eslint-disable no-await-in-loop */
+// eslint-disable-next-line import/no-extraneous-dependencies
+require('dotenv').config();
+const Flowifier = require('../lib');
 
 const main = async () => {
-    if (!process.env.ORGANIZATION_ID) {
-        console.error('Environment variable ORGANIZATION_ID is not set!')
-        return
+    if (!process.env.ACCESS_TOKEN) {
+        console.error('Environment variable ORGANIZATION_TOKEN is not set!');
+        return;
     }
 
-    if (!process.env.ORGANIZATION_TOKEN) {
-        console.error('Environment variable ORGANIZATION_TOKEN is not set!')
-        return
-    }
+    const accessToken = process.env.ACCESS_TOKEN;
 
-    const organizationId = process.env.ORGANIZATION_ID
-    const organizationToken = process.env.ORGANIZATION_TOKEN
+    const flowifier = new Flowifier(accessToken, { appUrl: 'http://127.0.0.1:8080' });
 
-    const flowifier = new Flowifier(organizationId, organizationToken, { appUrl: "http://127.0.0.1:8080" })
+    console.log('--- Get Workflows -------------------------------------------------');
 
-    console.log("--- Get Workflows -------------------------------------------------")
-
-    var workflows = await flowifier.getWorkflows()
-    console.log(workflows)
-
-    console.log()
-    console.log("--- Get Workflow --------------------------------------------------")
-
-    var singleWorkflow = await flowifier.getWorkflow('62fb457b198284c3c5009001')
-    console.log(`${singleWorkflow.id}: ${singleWorkflow.name}`)
+    const workflows = await flowifier.getWorkflows();
+    console.log('Workflows:', workflows);
 
     console.log();
-    console.log("--- Create Workflow Instance --------------------------------------");
+    console.log('--- Get Workflow --------------------------------------------------');
 
-    const beginTS = new Date()
+    const singleWorkflow = await flowifier.getWorkflow('6421cf880cf9779f8ddf1941');
+    console.log(`${singleWorkflow.id}: ${singleWorkflow.name}`);
+
+    console.log();
+    console.log('--- Create Workflow Instance --------------------------------------');
+
+    const beginTS = new Date();
 
     const contextObj = {
-        'firstname': 'JavaScript',
-        'lastname': 'Client Library'
-    }
+        firstname: 'JavaScript',
+        lastname: 'Client Library',
+    };
 
     const workflowInstance = await flowifier.executeWorkflow(singleWorkflow.id, contextObj);
 
     console.log(`New Workflow Instance Id: ${workflowInstance.id}`);
-    var workflowInstanceId = workflowInstance.id;
+    const workflowInstanceId = workflowInstance.id;
 
     console.log();
-    console.log("--- Get Workflow Instance Status ----------------------------------");
+    console.log('--- Get Workflow Instance Status ----------------------------------');
 
-    var workflowInstanceStatus = "initial";
+    let workflowInstanceStatus = 'initial';
 
     do {
-        workflowInstanceStatus = await flowifier.getWorkflowInstanceStatus(workflowInstanceId)
-        if (workflowInstanceStatus != "finished") {
-            console.log(`Workflow Instance Status: ${workflowInstanceStatus}`)
+        workflowInstanceStatus = await flowifier.getWorkflowInstanceStatus(workflowInstanceId);
+        if (workflowInstanceStatus !== 'finished') {
+            console.log(`Workflow Instance Status: ${workflowInstanceStatus}`);
         } else {
-            console.log(`Workflow Instance Status: ${workflowInstanceStatus} [${(new Date() - beginTS)/1000} sec.]`)
+            console.log(`Workflow Instance Status: ${workflowInstanceStatus} [${(new Date() - beginTS) / 1000} sec.]`);
         }
 
-        await new Promise(r => setTimeout(r, 500));
-    } while (workflowInstanceStatus != "finished" && workflowInstanceStatus != "failed");
+        // eslint-disable-next-line no-promise-executor-return
+        await new Promise((r) => setTimeout(r, 500));
+    } while (workflowInstanceStatus !== 'finished' && workflowInstanceStatus !== 'failed');
 
-    if (workflowInstanceStatus == "finished") {
-
+    if (workflowInstanceStatus === 'finished') {
         console.log();
-        console.log("--- Get Workflow Instance Result ----------------------------------");
+        console.log('--- Get Workflow Instance Result ----------------------------------');
 
-        var workflowInstanceResult = await flowifier.getWorkflowInstanceResult(workflowInstanceId)
-        console.log('Workflow Instance Result:', workflowInstanceResult)
+        const workflowInstanceResult = await flowifier.getWorkflowInstanceResult(workflowInstanceId);
+        console.log('Workflow Instance Result:', workflowInstanceResult);
     }
 
     console.log();
-    console.log("--- FINISHED ------------------------------------------------------")
-}
+    console.log('--- FINISHED ------------------------------------------------------');
+};
 
-main()
+main();

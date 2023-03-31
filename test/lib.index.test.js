@@ -1,8 +1,5 @@
-const Flowifier = require('./../lib')
-
-
-
+const Flowifier = require('../lib');
 
 it('ABC', () => {
-    expect('AAA').toBe('AAA')
-})
+    expect('AAA').toBe('AAA');
+});
